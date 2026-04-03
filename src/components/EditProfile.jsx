@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../utils/userSlice";
 
-const BASE_URL = "http://localhost:3000";
+import { BASE_URL } from "../utils/constant";
 
 export default function EditProfile() {
   const user = useSelector((store) => store.user);

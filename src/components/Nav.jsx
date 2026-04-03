@@ -15,7 +15,7 @@ export default function Nav({ isMobile = false }) {
       const res = await axios.get(BASE_URL + "/user/notifications/count", {
         withCredentials: true,
       });
-      console.log(res);
+      // console.log(res);
       setNotiCnt(res?.data?.count);
     }
     catch (err) {

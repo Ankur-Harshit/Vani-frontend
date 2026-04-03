@@ -22,7 +22,7 @@ const Notifications = () => {
         params: { cursor: nextCursor },
         withCredentials: true,
       });
-        console.log(res);
+        // console.log(res);
 
       const newData = res.data.data;
 

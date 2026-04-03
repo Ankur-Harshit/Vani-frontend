@@ -31,7 +31,7 @@ export default function PostBody({ post, user }) {
           withCredentials: true,
         },
       );
-      console.log(res);
+      // console.log(res);
       setExplaination(res?.data?.data);
     } catch (err) {
       console.log(err);

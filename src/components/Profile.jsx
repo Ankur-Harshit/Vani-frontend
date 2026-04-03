@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import PostCard from "./PostCard";
 
-const BASE_URL = "http://localhost:3000";
+import { BASE_URL } from "../utils/constant";
 
 export default function Profile() {
   const { userId } = useParams();
@@ -53,7 +53,7 @@ export default function Profile() {
         withCredentials: true,
       });
       setProfileData(res.data);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.error(err);
     }

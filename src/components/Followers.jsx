@@ -24,7 +24,7 @@ const Followers = () => {
       });
 
         const newData = res?.data?.data;
-        console.log(res);
+        // console.log(res);
 
       setFollowers((prev) => (nextCursor ? [...prev, ...newData] : newData));
 
