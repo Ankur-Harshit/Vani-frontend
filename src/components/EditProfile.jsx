@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../utils/userSlice";
-
 import { BASE_URL } from "../utils/constant";
 
 export default function EditProfile() {
@@ -17,24 +16,23 @@ export default function EditProfile() {
   const [about, setAbout] = useState(user?.about || "");
   const [photoPreview, setPhotoPreview] = useState(user?.photoUrl || "");
   const [isPrivate, setIsPrivate] = useState(user?.isPrivate);
-  const [notificationsOn, setNotificationsOn] = useState(user?.settings?.notifications);
+  const [notificationsOn, setNotificationsOn] = useState(
+    user?.settings?.notifications,
+  );
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleLogOut = async () => {
     try {
       setLoading(true);
-      const res = await axios.post(BASE_URL + "/logout",{}, {
-        withCredentials: true,
-      });
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
       dispatch(removeUser());
       navigate("/home");
       setLoading(false);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   /* ==============================
      🖼️ IMAGE UPLOAD
@@ -58,7 +56,6 @@ export default function EditProfile() {
         withCredentials: true,
       });
 
-      // update redux
       dispatch({
         type: "user/update",
         payload: { photoUrl: res.data.imageUrl },
@@ -84,7 +81,6 @@ export default function EditProfile() {
         { withCredentials: true },
       );
 
-      // update redux
       dispatch({
         type: "user/update",
         payload: res.data.data,
@@ -101,10 +97,10 @@ export default function EditProfile() {
   ============================== */
   const togglePrivacy = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         BASE_URL + "/profile/settings/privacy",
         {},
-          { withCredentials: true },
+        { withCredentials: true },
       );
       setIsPrivate((prev) => !prev);
     } catch (err) {
@@ -117,7 +113,7 @@ export default function EditProfile() {
   ============================== */
   const toggleNotifications = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         BASE_URL + "/profile/settings/notifications",
         {},
         { withCredentials: true },
@@ -133,12 +129,24 @@ export default function EditProfile() {
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Edit Profile</h2>
-        <button
-          onClick={handleSave}
-          className="bg-white text-black px-4 py-1.5 rounded-full font-semibold"
-        >
-          Save
-        </button>
+
+        <div className="flex items-center gap-3">
+          {/* 🔴 LOGOUT BUTTON */}
+          <button
+            onClick={handleLogOut}
+            className="text-red-500 font-semibold hover:text-red-400"
+          >
+            {loading ? "Logging out..." : "Logout"}
+          </button>
+
+          {/* 💾 SAVE BUTTON */}
+          <button
+            onClick={handleSave}
+            className="bg-white text-black px-4 py-1.5 rounded-full font-semibold"
+          >
+            Save
+          </button>
+        </div>
       </div>
 
       {/* PROFILE PHOTO */}
@@ -221,13 +229,6 @@ export default function EditProfile() {
             />
           </button>
         </div>
-
-        <button
-          onClick={handleLogOut}
-          className="w-12 h-6 flex items-center p-1 transition hover:text-red-600"
-        >
-          {loading?"LoggingOut..":"Logout"}
-        </button>
       </div>
     </div>
   );
@@ -244,22 +245,6 @@ function Input({ label, value, onChange }) {
         onChange={(e) => onChange(e.target.value)}
         className="w-full mt-1 bg-transparent border border-white/20 rounded-lg px-3 py-2 outline-none focus:border-white"
       />
-    </div>
-  );
-}
-
-/* SETTINGS ROW */
-function SettingRow({ title, subtitle, onClick }) {
-  return (
-    <div
-      onClick={onClick}
-      className="flex justify-between items-center border-b border-white/10 pb-3 cursor-pointer hover:bg-white/5 px-2 py-2 rounded"
-    >
-      <div>
-        <p className="font-medium">{title}</p>
-        <p className="text-xs text-white/50">{subtitle}</p>
-      </div>
-      <span className="text-white/50">›</span>
     </div>
   );
 }
