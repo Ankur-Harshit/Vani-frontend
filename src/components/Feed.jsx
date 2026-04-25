@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 import { ImageIcon, LocationIcon, SmileIcon } from "./icons";
 import PostCard from "./PostCard";
@@ -24,6 +26,8 @@ export default function Feed() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [endMessage, setEndMessage] = useState(false);
+  const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
 
   // 🚀 Fetch Feed
   const fetchFeed = async () => {
@@ -79,7 +83,19 @@ export default function Feed() {
       {/* HEADER */}
       <header className="sticky top-0 z-20 border-b border-white/10 bg-black/80 backdrop-blur-xl">
         {/* 🔥 LOGO SECTION */}
-        <div className="flex items-center justify-center py-1">
+        <div className="relative flex items-center justify-center py-1">
+          {/* Go Premium button — top-left, only when not verified */}
+          {user && !user.isVerified && (
+            <button
+              onClick={() => navigate("/premium")}
+              className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-amber-400/10 border border-amber-500/25 px-3 py-1.5 text-xs font-semibold text-amber-400 transition-all duration-300 hover:from-amber-500/25 hover:to-amber-400/20 hover:border-amber-400/40 hover:shadow-lg hover:shadow-amber-500/10 active:scale-95 group"
+            >
+              <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z" />
+              </svg>
+              <span className="hidden sm:inline">Go Premium</span>
+            </button>
+          )}
           <img src={Logo1} alt="Logo" className="h-10 object-contain" />
         </div>
 

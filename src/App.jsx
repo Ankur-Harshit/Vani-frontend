@@ -15,6 +15,7 @@ import Followings from "./components/Followings";
 import Explore from "./components/Explore";
 import ExploreProfile from "./components/ExploreProfile";
 import Hinge from "./components/Hinge";
+import Premium from "./components/Premium";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="/explore" element={<Explore />} />
               <Route path="/explore/profiles/:text" element={<ExploreProfile />} />
               <Route path="/hinge" element={<Hinge />} />
+              <Route path="/premium" element={<Premium />} />
             </Route>
           </Route>
         </Routes>
