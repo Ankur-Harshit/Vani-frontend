@@ -50,7 +50,7 @@ const Premium = () => {
       const res = await axios.get(BASE_URL + "/payment/verify", {
         withCredentials: true,
       });
-      if (res.isVerfied) {
+      if (res.data.isVerified) {
         setMembership(true);
       }
       console.log(res.data);
